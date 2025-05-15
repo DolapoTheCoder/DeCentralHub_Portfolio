@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ramadan Prayer Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Ramadan Prayer Tracker</h1>
+        <div id="date-navigation">
+            <button id="prev-day">◀</button>
+            <div id="date-display"></div>
+            <button id="next-day">▶</button>
+        </div>
+        <div id="streak-container">
+            <div id="streak-counter">Current Streak: <span id="streak">0</span> days</div>
+            <div id="longest-streak">Longest Streak: <span id="max-streak">0</span> days</div>
+        </div>
+        <div id="prayer-tracker"></div>
+        <div id="daily-summary">
+            <h3>Daily Summary</h3>
+            <p>Prayers Completed: <span id="daily-completed">0</span>/5</p>
+            <div id="daily-progress-bar">
+                <div id="daily-progress"></div>
+            </div>
+        </div>
+        <div id="achievements">
+            <h2>Achievements</h2>
+            <ul id="achievements-list"></ul>
+        </div>
+        <div id="overall-stats">
+            <h3>Overall Statistics</h3>
+            <p>Total Prayers Completed: <span id="total-prayers">0</span></p>
+            <p>Days Tracked: <span id="days-tracked">0</span></p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
