@@ -1,0 +1,88 @@
+.dashboard {
+    padding: 20px;
+  }
+  
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .grid-item {
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    padding: 15px;
+  }
+  
+  h2, h3 {
+    margin-top: 0;
+  }
+  
+  .peak-hours-prediction ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .peak-hours-prediction li {
+    margin-bottom: 10px;
+    padding: 5px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+  }
+  
+  .staff-schedule table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .staff-schedule th, .staff-schedule td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .staff-schedule th {
+    background-color: #f2f2f2;
+  }
+  
+  .staff-schedule tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .menu-updates ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .menu-updates li {
+    margin-bottom: 10px;
+    padding: 5px;
+    border-radius: 4px;
+  }
+  
+  .menu-updates .available {
+    background-color: #e6ffe6;
+    color: #006600;
+  }
+  
+  .menu-updates .unavailable {
+    background-color: #ffe6e6;
+    color: #990000;
+  }
+  
+  .pre-orders ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .pre-orders li {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #f0f8ff;
+    border-radius: 4px;
+    border-left: 4px solid #4169e1;
+  }
+  
+  .pre-orders strong {
+    color: #4169e1;
+  }
