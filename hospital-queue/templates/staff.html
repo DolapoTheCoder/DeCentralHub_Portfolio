@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Queue Management - Staff View</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+        }
+
+        .queue {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .patient {
+            margin-bottom: 5px;
+        }
+
+        button {
+            padding: 5px;
+            margin-top: 10px;
+        }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Hospital Queue Management</h1>
+    <h2>Staff View</h2>
+    <div id="queues"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script>
+        const socket = io();
+
+        function showError(message) {
+            $('#error').text(message).show().delay(5000).fadeOut();
+        }
+
+        function updateQueue(data) {
+            let queueHtml = `<div class="queue"><h3>${data.queue_name}</h3>`;
+            data.patients.forEach(patient => {
+                queueHtml += `<div class="patient">${patient.name} - Wait time: ${patient.wait_time} minutes</div>`;
+            });
+            queueHtml += `<button onclick="processNext(${data.queue_id})">Process Next Patient</button></div>`;
+            $(`#queue-${data.queue_id}`).html(queueHtml);
+        }
+
+        function processNext(queueId) {
+            $.get(`/next_patient/${queueId}`, function (data) {
+                alert(data.message);
+            }).fail(function (xhr) {
+                showError(xhr.responseJSON.error || 'Failed to process next patient');
+            });
+        }
+
+        $(document).ready(function () {
+            $('#queues').html('<div id="queue-1"></div><div id="queue-2"></div>');
+
+            [1, 2].forEach(queueId => {
+                $.get(`/queue_status/${queueId}`, function (data) {
+                    updateQueue({ ...data, queue_id: queueId });
+                }).fail(function (xhr) {
+                    showError(xhr.responseJSON.error || 'Failed to fetch queue status');
+                });
+            });
+
+            socket.on('queue_update', function (data) {
+                updateQueue(data);
+            });
+
+            socket.on('connect_error', function () {
+                showError('Connection to server lost. Please refresh the page.');
+            });
+        });
+    </script>
+</body>
+
+</html>

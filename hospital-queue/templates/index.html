@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Queue Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+        }
+
+        .queue {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .patient {
+            margin-bottom: 5px;
+        }
+
+        form {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input,
+        button,
+        select {
+            padding: 5px;
+        }
+
+        #patientStatus {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+        }
+
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Hospital Queue Management</h1>
+    <h2>Add Patient</h2>
+    <form id="addPatientForm">
+        <input type="text" id="patientName" placeholder="Patient Name" required>
+        <select id="queueSelect">
+            <option value="1">Emergency</option>
+            <option value="2">General Checkup</option>
+        </select>
+        <button type="submit">Add Patient</button>
+    </form>
+
+    <h2>Check Patient Status</h2>
+    <form id="checkStatusForm">
+        <input type="text" id="patientToken" placeholder="Patient Token" required>
+        <button type="submit">Check Status</button>
+    </form>
+    <div id="patientStatus"></div>
+
+    <h2>Current Queues</h2>
+    <div id="queues"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script>
+        const socket = io(transports: ['websocket', 'polling'], reconnectionAttempts: 10, reconnectionDelay: 1000, timeout: 5000);
+
+        function showError(message) {
+            $('#error').text(message).show().delay(5000).fadeOut();
+        }
+
+        socket.on('connect', function () {
+            console.log('Connected to socket server');
+        });
+
+        socket.on('disconnect', function (reason) {
+            console.log('Disconnected:', reason);
+            showError('Connection lost. Attempting to reconnect...');
+        });
+
+        socket.on('connect_error', function (error) {
+            console.error('Connection error:', error);
+            showError('Connection error. Retrying...');
+        });
+
+        function updateQueue(data) {
+            let queueHtml = `<div class="queue"><h3>${data.queue_name}</h3>`;
+            data.patients.forEach(patient => {
+                queueHtml += `<div class="patient">${patient.name} - Wait time: ${patient.wait_time} minutes</div>`;
+            });
+            queueHtml += `</div>`;
+            $(`#queue-${data.queue_id}`).html(queueHtml);
+        }
+
+        $(document).ready(function () {
+            $('#queues').html('<div id="queue-1"></div><div id="queue-2"></div>');
+
+            [1, 2].forEach(queueId => {
+                $.get(`/queue_status/${queueId}`, function (data) {
+                    updateQueue({ ...data, queue_id: queueId });
+                });
+            });
+
+            $('#addPatientForm').submit(function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: '/add_patient',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        name: $('#patientName').val(),
+                        queue_id: $('#queueSelect').val()
+                    }),
+                    success: function (response) {
+                        alert(`Patient added successfully. Your token is: ${response.token}`);
+                        $('#patientName').val('');
+                    },
+                    error: function (xhr) {
+                        showError(xhr.responseJSON.error || 'Failed to add patient');
+                    }
+                });
+            });
+
+            $('#checkStatusForm').submit(function (e) {
+                e.preventDefault();
+                const token = $('#patientToken').val();
+                $.get(`/patient_status/${token}`, function (data) {
+                    $('#patientStatus').html(`
+                        <h3>Patient Status</h3>
+                        <p>Name: ${data.name}</p>
+                        <p>Queue: ${data.queue_name}</p>
+                        <p>Position: ${data.position}</p>
+                        <p>Estimated Wait Time: ${data.estimated_wait_time} minutes</p>
+                    `);
+                }).fail(function (xhr) {
+                    showError(xhr.responseJSON.error || 'Failed to fetch patient status');
+                    $('#patientStatus').html('');
+                });
+            });
+
+            socket.on('queue_update', function (data) {
+                updateQueue(data);
+            });
+
+            socket.on('connect_error', function () {
+                showError('Connection to server lost. Please refresh the page.');
+            });
+        });
+    </script>
+</body>
+
+</html>
