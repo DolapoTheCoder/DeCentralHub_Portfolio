@@ -1,0 +1,33 @@
+.style-analyzer {
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+  }
+  
+  .style-analyzer button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .style-analyzer button:hover {
+    background-color: #45a049;
+  }
+  
+  .style-analyzer ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .style-analyzer li {
+    margin: 10px 0;
+  }

@@ -1,0 +1,53 @@
+.stylist-matcher {
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+  }
+  
+  .stylist-matcher h2 {
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .stylist-list {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+  }
+  
+  .stylist-list button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #e0e0e0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .stylist-list button:hover,
+  .stylist-list button.selected {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .stylist-details {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  
+  .stylist-details h3 {
+    color: #4CAF50;
+    margin-bottom: 15px;
+  }
+  
+  .stylist-details p {
+    margin: 10px 0;
+  }
+  
+  .stylist-details strong {
+    color: #333;
+  }

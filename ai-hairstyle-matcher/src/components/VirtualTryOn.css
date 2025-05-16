@@ -1,0 +1,45 @@
+.virtual-try-on {
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+  }
+  
+  .virtual-try-on h2 {
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .style-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+  }
+  
+  .style-buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .style-buttons button:hover {
+    background-color: #45a049;
+  }
+  
+  .preview {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .preview canvas {
+    max-width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  

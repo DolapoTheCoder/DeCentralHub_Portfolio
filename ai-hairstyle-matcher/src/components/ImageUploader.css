@@ -1,0 +1,23 @@
+.image-uploader {
+    margin: 20px 0;
+    padding: 20px;
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    text-align: center;
+  }
+  
+  .image-uploader input[type="file"] {
+    display: none;
+  }
+  
+  .image-uploader label {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .image-uploader label:hover {
+    background-color: #45a049;
+  }
