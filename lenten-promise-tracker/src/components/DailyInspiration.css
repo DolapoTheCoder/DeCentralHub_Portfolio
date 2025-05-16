@@ -1,0 +1,33 @@
+.daily-inspiration {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #e8f5e9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .daily-inspiration h3 {
+    color: #2e7d32;
+    margin-bottom: 10px;
+  }
+  
+  .daily-inspiration p {
+    font-style: italic;
+    margin-bottom: 15px;
+  }
+  
+  .daily-inspiration button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .daily-inspiration button:hover {
+    background-color: #45a049;
+  }
+  
